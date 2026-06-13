@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Development Bank Loan Readiness · BizHubGY</title>
+  <title>Development Bank Loan Readiness + Business Plan · BizHubGY</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,200" rel="stylesheet">
   <style>
@@ -41,7 +41,6 @@
     }
     .container { max-width: 720px; margin: 0 auto; padding: 0 20px; }
 
-    /* Nav */
     nav {
       background: white;
       border-bottom: 1px solid var(--border);
@@ -51,8 +50,8 @@
     .nav-brand { display: flex; align-items: center; gap: 8px; text-decoration: none; }
     .nav-brand img { height: 40px; width: auto; }
     .nav-brand span { font-size: 16px; font-weight: 700; color: var(--text); }
+    .nav-brand small { font-size: 10px; color: var(--text3); font-weight: 400; }
 
-    /* Hero */
     .hero {
       background: linear-gradient(135deg, #2C4D90, #1a3a6a);
       color: white;
@@ -60,225 +59,132 @@
       text-align: center;
     }
     .hero h1 { font-size: 28px; font-weight: 800; letter-spacing: -0.3px; }
-    .hero p { font-size: 14px; opacity: 0.85; margin-top: 6px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .hero p { font-size: 14px; opacity: 0.85; margin-top: 6px; max-width: 500px; margin: 6px auto 0; }
     .hero .badge {
-      display: inline-block;
-      background: rgba(255,255,255,0.15);
+      display: inline-block; background: rgba(255,255,255,0.15);
       font-size: 10px; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 1px; padding: 4px 12px; border-radius: 20px;
-      margin-bottom: 12px;
+      letter-spacing: 1px; padding: 4px 12px; border-radius: 20px; margin-bottom: 12px;
     }
 
-    /* Wizard Card */
     .wizard-card {
-      background: white;
-      border-radius: 20px;
-      border: 1px solid var(--border);
-      padding: 32px;
-      margin-top: -20px;
-      position: relative;
-      z-index: 10;
+      background: white; border-radius: 20px; border: 1px solid var(--border);
+      padding: 32px; margin-top: -20px; position: relative; z-index: 10;
     }
 
-    /* Progress Bar */
     .progress-container { margin-bottom: 28px; }
     .progress-steps { display: flex; justify-content: space-between; margin-bottom: 8px; }
-    .step-label { font-size: 11px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
+    .step-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.5px; }
     .step-label.active { color: var(--primary); }
     .step-label.done { color: var(--success); }
-    .progress-track {
-      height: 4px;
-      background: var(--surface3);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: var(--primary);
-      border-radius: 2px;
-      transition: width 0.4s ease;
-    }
+    .progress-track { height: 4px; background: var(--surface3); border-radius: 2px; overflow: hidden; }
+    .progress-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: width 0.4s ease; }
 
-    /* Step Content */
     .step { display: none; }
     .step.active { display: block; }
     .step h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
     .step .subtitle { font-size: 13px; color: var(--text3); margin-bottom: 24px; }
 
-    /* Form Elements */
     .form-group { margin-bottom: 20px; }
-    .form-group label {
-      display: block;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 6px;
-    }
+    .form-group label { display: block; font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 6px; }
     .form-group .hint { font-size: 12px; color: var(--text3); margin-bottom: 8px; }
+
+    input[type="text"], textarea, select {
+      width: 100%; padding: 12px 14px; border: 1.5px solid var(--border);
+      border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 14px;
+      color: var(--text); background: var(--surface); transition: border-color 0.2s;
+      outline: none;
+    }
+    input[type="text"]:focus, textarea:focus { border-color: var(--primary); background: white; }
+    textarea { min-height: 80px; resize: vertical; }
+    .char-count { font-size: 11px; color: var(--text3); text-align: right; margin-top: 4px; }
 
     .radio-group { display: flex; flex-direction: column; gap: 8px; }
     .radio-option {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 12px 14px;
-      border: 1.5px solid var(--border);
-      border-radius: 12px;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+      border: 1.5px solid var(--border); border-radius: 12px; cursor: pointer;
       transition: all 0.2s;
     }
     .radio-option:hover { border-color: var(--primary-light); }
-    .radio-option.selected {
-      border-color: var(--primary);
-      background: var(--primary-light);
-    }
+    .radio-option.selected { border-color: var(--primary); background: var(--primary-light); }
     .radio-option input[type="radio"] {
-      appearance: none;
-      width: 18px; height: 18px;
-      border: 2px solid var(--surface4);
-      border-radius: 50%;
-      flex-shrink: 0;
-      position: relative;
+      appearance: none; width: 18px; height: 18px;
+      border: 2px solid var(--surface4); border-radius: 50%; flex-shrink: 0;
       transition: all 0.2s;
     }
     .radio-option input[type="radio"]:checked {
-      border-color: var(--primary);
-      background: var(--primary);
+      border-color: var(--primary); background: var(--primary);
       box-shadow: inset 0 0 0 4px white;
     }
-    .radio-option .r-icon {
-      width: 32px; height: 32px;
-      border-radius: 10px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 18px;
-      flex-shrink: 0;
-    }
+    .radio-option .r-icon { width: 32px; height: 32px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
     .radio-option .r-text { flex: 1; }
     .radio-option .r-text .r-title { font-size: 14px; font-weight: 600; }
     .radio-option .r-text .r-desc { font-size: 12px; color: var(--text3); margin-top: 2px; }
 
-    /* Toggle (Yes/No) */
-    .toggle-group { display: flex; gap: 8px; flex-wrap: wrap; }
-    .toggle-btn {
-      padding: 10px 18px;
-      border: 1.5px solid var(--border);
-      border-radius: 10px;
-      font-size: 13px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s;
-      background: white;
-      color: var(--text2);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-    .toggle-btn:hover { border-color: var(--primary-light); }
-    .toggle-btn.active-yes { border-color: var(--success); background: var(--green-light); color: var(--success); }
-    .toggle-btn.active-no { border-color: var(--red); background: var(--red-light); color: var(--red); }
-
-    /* Checkbox Toggle (for compliance items) */
     .checklist-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      transition: all 0.2s;
-      cursor: pointer;
+      display: flex; align-items: center; gap: 14px; padding: 14px 16px;
+      background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
+      transition: all 0.2s; cursor: pointer;
     }
     .checklist-item:hover { border-color: var(--primary-light); }
-    .checklist-item.checked {
-      border-color: var(--success);
-      background: var(--green-light);
-    }
+    .checklist-item.checked { border-color: var(--success); background: var(--green-light); }
     .checklist-item .check-box {
-      width: 22px; height: 22px;
-      border: 2px solid var(--surface4);
-      border-radius: 6px;
-      display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      transition: all 0.2s;
-      color: white;
-      font-size: 14px;
+      width: 22px; height: 22px; border: 2px solid var(--surface4); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+      transition: all 0.2s; color: white; font-size: 14px;
     }
-    .checklist-item.checked .check-box {
-      background: var(--success);
-      border-color: var(--success);
-    }
+    .checklist-item.checked .check-box { background: var(--success); border-color: var(--success); }
     .checklist-item .cl-title { font-size: 14px; font-weight: 600; }
     .checklist-item .cl-desc { font-size: 12px; color: var(--text3); }
-    .checklist-item .cl-link {
-      margin-left: auto;
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--primary);
-      text-decoration: none;
-      flex-shrink: 0;
-    }
+    .checklist-item .cl-link { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--primary); text-decoration: none; flex-shrink: 0; }
     .checklist-item .cl-link:hover { text-decoration: underline; }
+    .checklist-item .build-now {
+      margin-left: auto; font-size: 10px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; padding: 4px 12px; border-radius: 20px;
+      background: var(--primary); color: white; flex-shrink: 0;
+    }
 
-    /* Slider */
     .slider-container { position: relative; padding: 10px 0; }
     .slider-container input[type="range"] {
-      width: 100%;
-      height: 6px;
-      -webkit-appearance: none;
-      appearance: none;
-      background: var(--surface3);
-      border-radius: 3px;
-      outline: none;
+      width: 100%; height: 6px; -webkit-appearance: none; appearance: none;
+      background: var(--surface3); border-radius: 3px; outline: none;
     }
     .slider-container input[type="range"]::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 24px; height: 24px;
-      background: var(--primary);
-      border-radius: 50%;
-      cursor: pointer;
-      border: 3px solid white;
-      box-shadow: 0 0 0 2px var(--primary);
+      -webkit-appearance: none; width: 24px; height: 24px; background: var(--primary);
+      border-radius: 50%; cursor: pointer; border: 3px solid white; box-shadow: 0 0 0 2px var(--primary);
     }
-    .slider-value {
-      text-align: center;
-      font-size: 28px;
-      font-weight: 800;
-      color: var(--primary);
-      margin: 8px 0 4px;
-    }
+    .slider-value { text-align: center; font-size: 28px; font-weight: 800; color: var(--primary); margin: 8px 0 4px; }
     .slider-sub { text-align: center; font-size: 12px; color: var(--text3); }
     .slider-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--text3); margin-top: 4px; }
 
-    /* Buttons */
+    .funds-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .funds-item { background: var(--surface); border-radius: 12px; padding: 14px; }
+    .funds-item label { font-size: 12px; font-weight: 600; }
+    .funds-item .funds-bar { height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; margin-top: 6px; }
+    .funds-item .funds-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+    .funds-item .funds-pct { font-size: 12px; font-weight: 700; text-align: right; margin-top: 2px; }
+    .funds-total { text-align: center; font-size: 13px; font-weight: 600; margin-top: 8px; padding: 8px; border-radius: 8px; }
+    .funds-total.ok { background: var(--green-light); color: var(--success); }
+    .funds-total.over { background: var(--red-light); color: var(--red); }
+
     .btn-row { display: flex; gap: 12px; margin-top: 28px; }
     .btn {
-      padding: 12px 28px;
-      border-radius: 30px;
-      font-size: 14px;
-      font-weight: 600;
-      border: none;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
+      padding: 12px 28px; border-radius: 30px; font-size: 14px; font-weight: 600;
+      border: none; cursor: pointer; transition: all 0.2s ease;
+      display: inline-flex; align-items: center; gap: 6px;
     }
     .btn-primary { background: var(--primary); color: white; }
     .btn-primary:hover { background: var(--primary-dark); transform: translateY(-1px); }
     .btn-outline { background: transparent; color: var(--text2); border: 1.5px solid var(--border); }
     .btn-outline:hover { border-color: var(--primary); color: var(--primary); }
+    .btn-success { background: var(--success); color: white; }
+    .btn-success:hover { background: var(--green-dark); transform: translateY(-1px); }
     .btn-full { width: 100%; justify-content: center; }
     .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
 
-    /* Results */
     .score-ring {
-      width: 140px; height: 140px;
-      border-radius: 50%;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      width: 140px; height: 140px; border-radius: 50%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
       margin: 0 auto 20px;
-      position: relative;
     }
     .score-ring .score-num { font-size: 48px; font-weight: 900; line-height: 1; }
     .score-ring .score-label { font-size: 13px; opacity: 0.8; font-weight: 500; margin-top: 4px; }
@@ -288,59 +194,43 @@
     .score-ring.low { background: var(--red-light); color: var(--red); }
 
     .result-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px;
-      margin-bottom: 12px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 14px; padding: 18px; margin-bottom: 12px;
     }
-    .result-card h4 {
-      font-size: 14px;
-      font-weight: 600;
-      margin-bottom: 10px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
+    .result-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
     .result-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--surface3);
-      font-size: 13px;
+      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+      border-bottom: 1px solid var(--surface3); font-size: 13px;
     }
     .result-item:last-child { border-bottom: none; }
     .result-item .ri-icon { font-size: 18px; }
-    .result-item .ri-check { color: var(--success); }
-    .result-item .ri-cross { color: var(--red); }
-    .result-item .ri-info { color: var(--primary); }
     .result-item .ri-text { flex: 1; }
-    .result-item .ri-action {
-      font-size: 11px;
-      font-weight: 600;
-      color: var(--primary);
-      text-decoration: none;
-    }
+    .result-item .ri-action { font-size: 11px; font-weight: 600; color: var(--primary); text-decoration: none; }
 
-    /* Info banner */
     .info-banner {
-      background: var(--amber-light);
-      border: 1px solid #FFE082;
-      border-radius: 12px;
-      padding: 14px 16px;
-      margin-bottom: 16px;
-      font-size: 13px;
+      background: var(--amber-light); border: 1px solid #FFE082;
+      border-radius: 12px; padding: 14px 16px; margin-bottom: 16px; font-size: 13px;
     }
     .info-banner strong { color: var(--amber-dark); }
 
-    /* Responsive */
+    /* Business plan in results */
+    .bp-section {
+      background: white; border: 1px solid var(--border);
+      border-radius: 12px; padding: 16px; margin-bottom: 10px;
+    }
+    .bp-section h5 {
+      font-size: 12px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.5px; color: var(--primary); margin-bottom: 6px;
+    }
+    .bp-section p { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+    @media (max-width: 768px) {
+      .funds-grid { grid-template-columns: 1fr; }
+      .btn-row { flex-direction: column; }
+    }
     @media (max-width: 480px) {
       .wizard-card { padding: 20px 16px; }
       .hero h1 { font-size: 22px; }
-      .btn-row { flex-direction: column; }
-      .radio-option { padding: 10px 12px; }
-      .checklist-item { padding: 10px 12px; }
     }
   </style>
 </head>
@@ -350,7 +240,7 @@
   <div class="container">
     <a href="#" class="nav-brand">
       <img src="https://raw.githubusercontent.com/rono1503/bizhubgy-content-styles/main/logo.png" alt="BizHubGY" onerror="this.style.display='none'">
-      <span>Loan Readiness</span>
+      <span>Loan Readiness <small>+ Business Plan</small></span>
     </a>
     <a href="https://rono1503.github.io/bizhubgy-product-roadmap/" style="font-size:13px;font-weight:500;color:var(--text2);text-decoration:none;">
       Product Roadmap →
@@ -361,8 +251,8 @@
 <section class="hero">
   <div class="container">
     <div class="badge">🇬🇾 Guyana Development Bank 2026</div>
-    <h1>Are You Loan Ready?</h1>
-    <p>Check your eligibility for the GYD$3M (US$14,500) 0% interest SME loan in under 3 minutes</p>
+    <h1>Loan Ready + Business Plan Builder</h1>
+    <p>Check eligibility for the GYD$3M (US$14,500) 0% SME loan and generate a bank-ready business plan — all in one go</p>
   </div>
 </section>
 
@@ -372,20 +262,21 @@
     <!-- Progress -->
     <div class="progress-container">
       <div class="progress-steps">
-        <span class="step-label" id="stepLabel1">Business Profile</span>
+        <span class="step-label" id="stepLabel1">Profile</span>
         <span class="step-label" id="stepLabel2">Compliance</span>
-        <span class="step-label" id="stepLabel3">Loan Details</span>
-        <span class="step-label" id="stepLabel4">Results</span>
+        <span class="step-label" id="stepLabel3">Loan</span>
+        <span class="step-label" id="stepLabel4">Business Plan</span>
+        <span class="step-label" id="stepLabel5">Results</span>
       </div>
       <div class="progress-track">
         <div class="progress-fill" id="progressFill" style="width: 0%"></div>
       </div>
     </div>
 
-    <!-- Step 1: Business Profile -->
+    <!-- ===== STEP 1: Business Profile ===== -->
     <div class="step active" id="step1">
       <h2>Tell us about your business</h2>
-      <p class="subtitle">This helps us match you to the right loan tier</p>
+      <p class="subtitle">This helps us match you to the right loan tier and build your plan</p>
 
       <div class="form-group">
         <label>What type of business do you have?</label>
@@ -400,7 +291,7 @@
           </div>
           <div class="radio-option" onclick="selectRadio(this, 'bizType', 'Partnership')">
             <input type="radio" name="bizType" value="Partnership">
-            <div class="r-icon" style="background:var(--plum-light, #EDE4F0);color:var(--plum, #7B4D8F)">🤝</div>
+            <div class="r-icon" style="background:#EDE4F0;color:#7B4D8F">🤝</div>
             <div class="r-text">
               <div class="r-title">Partnership</div>
               <div class="r-desc">Two or more owners sharing the business</div>
@@ -411,7 +302,7 @@
             <div class="r-icon" style="background:var(--amber-light);color:var(--amber-dark)">🏢</div>
             <div class="r-text">
               <div class="r-title">Limited Liability Company (LLC)</div>
-              <div class="r-desc">Formally incorporated — best for serious ventures, diaspora entrepreneurs</div>
+              <div class="r-desc">Formally incorporated — best for ventures seeking investment</div>
             </div>
           </div>
           <div class="radio-option" onclick="selectRadio(this, 'bizType', 'Not Yet Registered')">
@@ -440,6 +331,9 @@
           <div class="radio-option" style="flex:1;min-width:140px;padding:10px 14px;" onclick="selectRadio(this, 'sector', 'Creative')">
             <input type="radio" name="sector" value="Creative"> 🎨 Creative
           </div>
+          <div class="radio-option" style="flex:1;min-width:140px;padding:10px 14px;" onclick="selectRadio(this, 'sector', 'Construction')">
+            <input type="radio" name="sector" value="Construction"> 🏗️ Construction
+          </div>
           <div class="radio-option" style="flex:1;min-width:140px;padding:10px 14px;" onclick="selectRadio(this, 'sector', 'Other')">
             <input type="radio" name="sector" value="Other"> 📋 Other
           </div>
@@ -466,7 +360,7 @@
       </div>
     </div>
 
-    <!-- Step 2: Compliance Check -->
+    <!-- ===== STEP 2: Compliance Check ===== -->
     <div class="step" id="step2">
       <h2>Compliance Check</h2>
       <p class="subtitle">The Development Bank requires these to qualify. Check what you already have.</p>
@@ -491,7 +385,7 @@
         <div class="check-box"><span class="material-symbols-outlined" style="font-size:14px">check</span></div>
         <div class="r-text">
           <div class="cl-title">NIS Registration</div>
-          <div class="cl-desc">Registered with the National Insurance Scheme (required if hiring)</div>
+          <div class="cl-desc">Registered with the National Insurance Scheme</div>
         </div>
         <a class="cl-link" href="https://nis.gov.gy" target="_blank">Register →</a>
       </div>
@@ -503,14 +397,6 @@
         </div>
         <a class="cl-link" href="https://gra.gov.gy" target="_blank">Check →</a>
       </div>
-      <div class="checklist-item" onclick="toggleCheck(this, 'businessPlan')">
-        <div class="check-box"><span class="material-symbols-outlined" style="font-size:14px">check</span></div>
-        <div class="r-text">
-          <div class="cl-title">Business Plan</div>
-          <div class="cl-desc">Detailed plan outlining use of funds, projections, and job creation</div>
-        </div>
-        <a class="cl-link" style="color:var(--text3);cursor:default;">Coming soon</a>
-      </div>
       <div class="checklist-item" onclick="toggleCheck(this, 'digitalId')">
         <div class="check-box"><span class="material-symbols-outlined" style="font-size:14px">check</span></div>
         <div class="r-text">
@@ -518,6 +404,14 @@
           <div class="cl-desc">Government-issued digital ID (preferred) or valid national ID</div>
         </div>
         <a class="cl-link" href="https://ndma.gov.gy" target="_blank">Get ID →</a>
+      </div>
+      <div class="checklist-item" id="bpCheckItem" onclick="toggleCheck(this, 'businessPlan')">
+        <div class="check-box"><span class="material-symbols-outlined" style="font-size:14px">check</span></div>
+        <div class="r-text">
+          <div class="cl-title">Business Plan 📄</div>
+          <div class="cl-desc" id="bpCheckDesc">We'll help you build one in the next step — it takes 5 minutes</div>
+        </div>
+        <span class="build-now">Build Now →</span>
       </div>
 
       <div class="info-banner">
@@ -530,10 +424,10 @@
       </div>
     </div>
 
-    <!-- Step 3: Loan Details -->
+    <!-- ===== STEP 3: Loan Details ===== -->
     <div class="step" id="step3">
       <h2>Loan Details</h2>
-      <p class="subtitle">Help us match you to the right loan structure</p>
+      <p class="subtitle">We'll use this to build the financial section of your business plan</p>
 
       <div class="form-group">
         <label>How much do you need?</label>
@@ -542,15 +436,12 @@
           <div class="slider-value" id="loanAmount">GYD $3,000,000</div>
           <div class="slider-sub">~US$14,500</div>
           <input type="range" id="loanSlider" min="500000" max="10000000" step="100000" value="3000000" oninput="updateLoanSlider()">
-          <div class="slider-labels">
-            <span>GYD $500K</span>
-            <span>GYD $10M</span>
-          </div>
+          <div class="slider-labels"><span>GYD $500K</span><span>GYD $10M</span></div>
         </div>
       </div>
 
       <div class="form-group">
-        <label>What's the main purpose of the loan?</label>
+        <label>What's the main purpose?</label>
         <div class="radio-group" style="flex-direction:row;flex-wrap:wrap;">
           <div class="radio-option" style="flex:1;min-width:130px;padding:10px 14px;" onclick="selectRadio(this, 'purpose', 'Startup')">
             <input type="radio" name="purpose" value="Startup"> 🚀 Startup
@@ -574,7 +465,7 @@
             <input type="radio" name="tier" value="tier1">
             <div class="r-text">
               <div class="r-title">Tier 1 Only</div>
-              <div class="r-desc">Up to GYD$3M · 0% interest · No collateral</div>
+              <div class="r-desc">Up to GYD$3M · 0% · No collateral</div>
             </div>
           </div>
           <div class="radio-option" style="flex:1;min-width:160px;padding:10px 14px;" onclick="selectRadio(this, 'tier', 'both')">
@@ -589,14 +480,120 @@
 
       <div class="btn-row">
         <button class="btn btn-outline" onclick="goStep(2)">← Back</button>
-        <button class="btn btn-primary btn-full" onclick="showResults()">See My Results →</button>
+        <button class="btn btn-primary btn-full" onclick="goStep(4)">Continue →</button>
       </div>
     </div>
 
-    <!-- Step 4: Results -->
+    <!-- ===== STEP 4: Business Plan Builder ===== -->
     <div class="step" id="step4">
+      <h2>📄 Build Your Business Plan</h2>
+      <p class="subtitle">Required for the Development Bank loan. Answer a few quick questions — we'll generate a bank-ready plan.</p>
+
+      <div class="form-group">
+        <label>Your business name</label>
+        <input type="text" id="bizName" placeholder="e.g. R&G Catering Services" oninput="state.bizName = this.value">
+      </div>
+
+      <div class="form-group">
+        <label>Describe your business in a few sentences</label>
+        <div class="hint">What products or services do you offer? What makes you different?</div>
+        <textarea id="bizDesc" placeholder="e.g. We provide catering services for corporate events, weddings, and private functions in Georgetown. Our menu blends traditional Guyanese cuisine with modern presentation..."
+          oninput="state.bizDesc = this.value; document.getElementById('descCount').textContent = this.value.length + '/500'"></textarea>
+        <div class="char-count" id="descCount">0/500</div>
+      </div>
+
+      <div class="form-group">
+        <label>Who are your target customers?</label>
+        <div class="hint" id="customerHint">We've suggested a few based on your sector. Edit freely.</div>
+        <textarea id="targetMarket" placeholder="" oninput="state.targetMarket = this.value"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>How much annual revenue do you project?</label>
+        <div class="slider-container">
+          <div class="slider-value" id="revAmount">GYD $0</div>
+          <input type="range" id="revSlider" min="0" max="10000000" step="500000" value="0" oninput="updateRevSlider()">
+          <div class="slider-labels"><span>GYD $0</span><span>GYD $10M</span></div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>How many jobs will you create with this loan?</label>
+        <div class="hint">The Development Bank prioritises job-creating businesses</div>
+        <div class="radio-group" style="flex-direction:row;flex-wrap:wrap;">
+          <div class="radio-option" style="flex:1;min-width:80px;padding:10px 14px;" onclick="selectRadio(this, 'jobs', '0')">
+            <input type="radio" name="jobs" value="0"> 0
+          </div>
+          <div class="radio-option" style="flex:1;min-width:80px;padding:10px 14px;" onclick="selectRadio(this, 'jobs', '1-3')">
+            <input type="radio" name="jobs" value="1-3"> 1–3
+          </div>
+          <div class="radio-option" style="flex:1;min-width:80px;padding:10px 14px;" onclick="selectRadio(this, 'jobs', '4-10')">
+            <input type="radio" name="jobs" value="4-10"> 4–10
+          </div>
+          <div class="radio-option" style="flex:1;min-width:80px;padding:10px 14px;" onclick="selectRadio(this, 'jobs', '10+')">
+            <input type="radio" name="jobs" value="10+"> 10+
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>What experience or qualifications do you have?</label>
+        <div class="hint">List relevant experience, training, or education that prepares you to run this business</div>
+        <textarea id="experience" placeholder="e.g. 5 years managing a restaurant in Georgetown. Diploma in Hospitality Management from University of Guyana. Completed the Small Business Bureau's entrepreneurship training..."
+          oninput="state.experience = this.value; document.getElementById('expCount').textContent = this.value.length + '/500'"></textarea>
+        <div class="char-count" id="expCount">0/500</div>
+      </div>
+
+      <div class="form-group">
+        <label>How will you use the loan funds?</label>
+        <div class="hint">Drag the sliders to show your planned allocation</div>
+        <div class="funds-grid">
+          <div class="funds-item">
+            <label style="color:var(--primary)">🏭 Equipment</label>
+            <input type="range" min="0" max="100" value="35" class="funds-slider" data-key="equipment" oninput="updateFunds()">
+            <div><div class="funds-bar"><div class="funds-fill" id="fundBar-equipment" style="width:35%;background:var(--primary)"></div></div></div>
+            <div class="funds-pct" id="fundPct-equipment" style="color:var(--primary)">35%</div>
+          </div>
+          <div class="funds-item">
+            <label style="color:var(--success)">👥 Staff & Inventory</label>
+            <input type="range" min="0" max="100" value="30" class="funds-slider" data-key="staff" oninput="updateFunds()">
+            <div><div class="funds-bar"><div class="funds-fill" id="fundBar-staff" style="width:30%;background:var(--success)"></div></div></div>
+            <div class="funds-pct" id="fundPct-staff" style="color:var(--success)">30%</div>
+          </div>
+          <div class="funds-item">
+            <label style="color:var(--amber-dark)">📢 Marketing</label>
+            <input type="range" min="0" max="100" value="20" class="funds-slider" data-key="marketing" oninput="updateFunds()">
+            <div><div class="funds-bar"><div class="funds-fill" id="fundBar-marketing" style="width:20%;background:var(--amber-dark)"></div></div></div>
+            <div class="funds-pct" id="fundPct-marketing" style="color:var(--amber-dark)">20%</div>
+          </div>
+          <div class="funds-item">
+            <label style="color:var(--plum, #7B4D8F)">💰 Working Capital</label>
+            <input type="range" min="0" max="100" value="15" class="funds-slider" data-key="capital" oninput="updateFunds()">
+            <div><div class="funds-bar"><div class="funds-fill" id="fundBar-capital" style="width:15%;background:#7B4D8F"></div></div></div>
+            <div class="funds-pct" id="fundPct-capital" style="color:#7B4D8F">15%</div>
+          </div>
+        </div>
+        <div class="funds-total ok" id="fundsTotal">✅ Allocation: 100% — Ready</div>
+      </div>
+
+      <div class="info-banner">
+        <strong>💡 Tip:</strong> A strong business plan clearly explains what you'll do with the money and how it will create value. The Development Bank also offers free training to help you refine your plan.
+      </div>
+
+      <div class="btn-row">
+        <button class="btn btn-outline" onclick="goStep(3)">← Back</button>
+        <button class="btn btn-success btn-full" onclick="showResults()">
+          <span class="material-symbols-outlined" style="font-size:18px">auto_awesome</span>
+          Generate My Results →
+        </button>
+      </div>
+    </div>
+
+    <!-- ===== STEP 5: Results ===== -->
+    <div class="step" id="step5">
       <div id="resultsContent"></div>
       <div class="btn-row">
+        <button class="btn btn-outline" onclick="printPlan()">🖨️ Print / Save PDF</button>
         <button class="btn btn-outline" onclick="goStep(1)">← Start Over</button>
         <button class="btn btn-primary btn-full" onclick="window.open('https://bizhubgy.com','_blank')">Explore BizHubGY Services →</button>
       </div>
@@ -605,7 +602,6 @@
   </div>
 </div>
 
-<!-- Footer -->
 <div style="text-align:center;padding:32px 0;color:var(--text3);font-size:13px;border-top:1px solid var(--border);margin-top:40px;">
   <div class="container">
     <p>🇬🇾 BizHubGY — Helping Guyanese SMEs access the Development Bank's zero-interest loan programme</p>
@@ -614,28 +610,43 @@
 </div>
 
 <script>
-// === STATE ===
+// ===== STATE =====
 const state = {
-  bizType: '',
-  sector: '',
-  stage: '',
+  bizType: '', sector: '', stage: '',
+  bizName: '', bizDesc: '', targetMarket: '',
+  projectedRevenue: 0, jobs: '', experience: '',
+  funds: { equipment: 35, staff: 30, marketing: 20, capital: 15 },
   compliance: {},
-  loanAmount: 3000000,
-  purpose: '',
-  tier: ''
+  loanAmount: 3000000, purpose: '', tier: '',
+  resultsGenerated: false
 };
 let currentStep = 1;
 
-// === NAVIGATION ===
+// Sector-based customer suggestions
+const customerHints = {
+  'Agriculture': 'e.g. Local grocery stores, restaurants, exporters, CARICOM markets, government schools feeding programme',
+  'Tourism': 'e.g. International tourists, diaspora visitors, corporate travellers, eco-tourists, local weekend travellers',
+  'Services': 'e.g. Small businesses in Georgetown, government agencies, diaspora clients, residents in your region',
+  'Creative': 'e.g. Local event planners, corporate clients, online buyers, tourism gift shops, social media followers',
+  'Construction': 'e.g. Homeowners, real estate developers, government infrastructure projects, commercial property owners',
+  'Other': 'e.g. Describe your target customers — who will pay for your product or service?'
+};
+
+// ===== NAVIGATION =====
 function goStep(n) {
-  // Validate Step 1
   if (n === 2 && (!state.bizType || !state.sector || !state.stage)) {
     alert('Please fill in all fields before continuing.');
     return;
   }
-  // Validate Step 3
-  if (n === 4 && (!state.purpose || !state.tier)) {
-    alert('Please select a loan purpose and tier.');
+  if (n === 3 && !state.purpose) {
+    // Allow from step 2 with just purpose unset
+  }
+  if (n === 4 && !state.purpose) {
+    alert('Please complete the loan details first.');
+    return;
+  }
+  if (n === 5 && !state.bizName) {
+    alert('Please complete the business plan first.');
     return;
   }
 
@@ -643,21 +654,34 @@ function goStep(n) {
   document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
   document.getElementById('step' + n).classList.add('active');
 
-  // Update progress
-  const pct = ((n - 1) / 3) * 100;
+  const pct = ((n - 1) / 4) * 100;
   document.getElementById('progressFill').style.width = pct + '%';
 
-  for (let i = 1; i <= 4; i++) {
+  for (let i = 1; i <= 5; i++) {
     const label = document.getElementById('stepLabel' + i);
-    if (i < n) { label.className = 'step-label done'; label.innerHTML = '✓ ' + label.textContent.trim(); }
-    else if (i === n) { label.className = 'step-label active'; }
-    else { label.className = 'step-label'; }
+    if (i < n) {
+      const names = ['', 'Profile', 'Compliance', 'Loan', 'Business Plan', 'Results'];
+      label.className = 'step-label done';
+      label.innerHTML = '✓ ' + names[i];
+    } else if (i === n) {
+      label.className = 'step-label active';
+    } else {
+      label.className = 'step-label';
+    }
+  }
+
+  // Populate customer hint when entering step 4
+  if (n === 4) {
+    const hint = customerHints[state.sector] || 'Describe your target customers';
+    document.getElementById('customerHint').textContent = '💡 ' + hint;
+    if (!state.targetMarket) {
+      document.getElementById('targetMarket').placeholder = hint;
+    }
   }
 }
 
-// === RADIO SELECT ===
+// ===== RADIO =====
 function selectRadio(el, name, value) {
-  // Remove selected from siblings
   const parent = el.parentElement;
   parent.querySelectorAll('.radio-option').forEach(r => r.classList.remove('selected'));
   el.classList.add('selected');
@@ -665,167 +689,251 @@ function selectRadio(el, name, value) {
   state[name] = value;
 }
 
-// === CHECKLIST TOGGLE ===
+// ===== CHECKLIST =====
 function toggleCheck(el, key) {
   el.classList.toggle('checked');
-  const isChecked = el.classList.contains('checked');
-  state.compliance[key] = isChecked;
+  state.compliance[key] = el.classList.contains('checked');
   const icon = el.querySelector('.check-box .material-symbols-outlined');
-  if (icon) {
-    icon.style.display = isChecked ? 'block' : 'none';
+  if (icon) icon.style.display = state.compliance[key] ? 'block' : 'none';
+  // If they toggle the business plan check, update desc
+  if (key === 'businessPlan') {
+    document.getElementById('bpCheckDesc').textContent =
+      state.compliance[key] ? '✅ Done — we built it in the next step' : "We'll help you build one in the next step";
   }
 }
 
-// === LOAN SLIDER ===
+// ===== SLIDERS =====
 function updateLoanSlider() {
-  const slider = document.getElementById('loanSlider');
-  const val = parseInt(slider.value);
-  state.loanAmount = val;
-  document.getElementById('loanAmount').textContent = 'GYD $' + val.toLocaleString();
-  const usd = Math.round(val / 209);
-  document.querySelector('#step3 .slider-sub').textContent = '~US$' + usd.toLocaleString();
+  const v = parseInt(document.getElementById('loanSlider').value);
+  state.loanAmount = v;
+  document.getElementById('loanAmount').textContent = 'GYD $' + v.toLocaleString();
+  document.querySelector('#step3 .slider-sub').textContent = '~US$' + Math.round(v / 209).toLocaleString();
 }
 
-// === RESULTS ===
+function updateRevSlider() {
+  const v = parseInt(document.getElementById('revSlider').value);
+  state.projectedRevenue = v;
+  document.getElementById('revAmount').textContent = 'GYD $' + v.toLocaleString();
+}
+
+function updateFunds() {
+  const sliders = document.querySelectorAll('.funds-slider');
+  let total = 0;
+  sliders.forEach(s => {
+    const key = s.dataset.key;
+    const val = parseInt(s.value);
+    state.funds[key] = val;
+    document.getElementById('fundBar-' + key).style.width = val + '%';
+    document.getElementById('fundPct-' + key).textContent = val + '%';
+    total += val;
+  });
+  const el = document.getElementById('fundsTotal');
+  if (total === 100) {
+    el.className = 'funds-total ok';
+    el.innerHTML = '✅ Allocation: 100% — Ready';
+  } else {
+    el.className = 'funds-total over';
+    el.innerHTML = '⚠️ Allocation: ' + total + '% — must equal 100%. Adjust sliders.';
+  }
+}
+
+// ===== BUSINESS PLAN HELPER =====
+function generateBusinessPlanHTML() {
+  const name = state.bizName || 'Your Business Name';
+  const sector = state.sector || 'Services';
+  const bizType = state.bizType || 'Sole Trader';
+  const desc = state.bizDesc || 'A description of your business.';
+  const market = state.targetMarket || 'Target customers in the ' + sector + ' sector.';
+  const loanAmt = state.loanAmount.toLocaleString();
+  const revAmt = state.projectedRevenue.toLocaleString();
+  const jobs = state.jobs || 'TBD';
+  const experience = state.experience || 'Relevant experience and qualifications.';
+  const f = state.funds;
+  const totalPct = f.equipment + f.staff + f.marketing + f.capital;
+
+  return `
+    <div class="bp-section">
+      <h5>1. Executive Summary</h5>
+      <p><strong>${name}</strong> is a ${bizType} operating in Guyana's <strong>${sector}</strong> sector. The business is seeking GYD $${loanAmt} in Development Bank financing to ${state.purpose === 'Startup' ? 'launch operations' : state.purpose === 'Expansion' ? 'expand operations' : state.purpose === 'Equipment' ? 'purchase equipment' : 'provide working capital'}. With projected annual revenue of GYD $${revAmt} and the creation of <strong>${jobs}</strong> job(s), this investment will contribute to Guyana's growing SME ecosystem.</p>
+    </div>
+    <div class="bp-section">
+      <h5>2. Business Description</h5>
+      <p>${desc}</p>
+    </div>
+    <div class="bp-section">
+      <h5>3. Market Analysis</h5>
+      <p>Target market: ${market}</p>
+      <p style="margin-top:8px;">This business operates in Guyana's rapidly growing ${sector} sector, which benefits from the country's expanding economy driven by oil and gas production exceeding 650,000 barrels per day, infrastructure investment, and increasing local content requirements.</p>
+    </div>
+    <div class="bp-section">
+      <h5>4. Management & Experience</h5>
+      <p>${experience}</p>
+    </div>
+    <div class="bp-section">
+      <h5>5. Use of Funds</h5>
+      <p>The requested GYD $${loanAmt} will be allocated as follows:</p>
+      <div style="margin-top:8px;">
+        ${f.equipment > 0 ? '<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;"><span>🏭 Equipment</span><span style="font-weight:600;">' + f.equipment + '% (GYD $' + Math.round(state.loanAmount * f.equipment / 100).toLocaleString() + ')</span></div>' : ''}
+        ${f.staff > 0 ? '<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;"><span>👥 Staff & Inventory</span><span style="font-weight:600;">' + f.staff + '% (GYD $' + Math.round(state.loanAmount * f.staff / 100).toLocaleString() + ')</span></div>' : ''}
+        ${f.marketing > 0 ? '<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;"><span>📢 Marketing</span><span style="font-weight:600;">' + f.marketing + '% (GYD $' + Math.round(state.loanAmount * f.marketing / 100).toLocaleString() + ')</span></div>' : ''}
+        ${f.capital > 0 ? '<div style="display:flex;justify-content:space-between;font-size:13px;padding:4px 0;"><span>💰 Working Capital</span><span style="font-weight:600;">' + f.capital + '% (GYD $' + Math.round(state.loanAmount * f.capital / 100).toLocaleString() + ')</span></div>' : ''}
+      </div>
+      ${totalPct !== 100 ? '<p style="color:var(--red);font-size:12px;margin-top:4px;">⚠️ Funds allocation totals ' + totalPct + '% — adjust sliders to reach 100%</p>' : ''}
+    </div>
+    <div class="bp-section">
+      <h5>6. Financial Projections</h5>
+      <p><strong>Projected annual revenue:</strong> GYD $${revAmt}</p>
+      <p><strong>Loan amount requested:</strong> GYD $${loanAmt} (${state.tier === 'tier1' ? 'Tier 1 — 0% interest, no collateral' : 'Tier 1 + Tier 2 — blended rate'})</p>
+      <p><strong>Jobs to be created:</strong> ${jobs}</p>
+      <p style="margin-top:8px;color:var(--text3);">Note: Full financial projections including profit & loss, cash flow, and balance sheet should be prepared with an accountant for the final loan application. BizHubGY can connect you with qualified accounting professionals.</p>
+    </div>
+  `;
+}
+
+// ===== RESULTS =====
 function showResults() {
-  // Calculate score
+  if (!state.bizName) {
+    alert('Please enter your business name.');
+    return;
+  }
+
+  // Auto-check business plan in compliance
+  state.compliance.businessPlan = true;
+
   const complianceItems = ['dcra', 'tin', 'nis', 'graCompliant', 'businessPlan', 'digitalId'];
   const checked = complianceItems.filter(k => state.compliance[k]).length;
-  const total = complianceItems.length;
-  const compliancePct = Math.round((checked / total) * 100);
-
-  // Bonus: operating + registered
+  const compliancePct = Math.round((checked / complianceItems.length) * 100);
   let bonus = 0;
   if (state.stage === 'Operating') bonus += 10;
   if (state.bizType === 'LLC') bonus += 5;
-
   const finalScore = Math.min(100, compliancePct + bonus);
 
-  // Determine readiness level
   let level, levelClass, levelMsg;
-  if (finalScore >= 80) {
-    level = 'Excellent';
-    levelClass = 'excellent';
-    levelMsg = 'You are well positioned to apply for the Development Bank loan. Most prerequisites are met!';
-  } else if (finalScore >= 60) {
-    level = 'Good';
-    levelClass = 'good';
-    levelMsg = 'You are mostly ready. Complete the missing items below and you\'ll be set.';
-  } else if (finalScore >= 40) {
-    level = 'Fair';
-    levelClass = 'fair';
-    levelMsg = 'You have a solid start. Focus on completing the compliance checklist before applying.';
-  } else {
-    level = 'Needs Work';
-    levelClass = 'low';
-    levelMsg = 'Starting from scratch is fine. The Development Bank provides training and mentorship too.';
-  }
+  if (finalScore >= 80) { level = 'Excellent'; levelClass = 'excellent'; levelMsg = 'You are well positioned. Most prerequisites are met!'; }
+  else if (finalScore >= 60) { level = 'Good'; levelClass = 'good'; levelMsg = 'You are mostly ready. Complete the missing items below.'; }
+  else if (finalScore >= 40) { level = 'Fair'; levelClass = 'fair'; levelMsg = 'Solid start. Focus on completing the checklist below.'; }
+  else { level = 'Needs Work'; levelClass = 'low'; levelMsg = 'Starting from scratch is fine. The Bank offers training too.'; }
 
-  // Build result HTML
+  const usdAmt = Math.round(state.loanAmount / 209);
+  const bpHTML = generateBusinessPlanHTML();
+
   let html = `
-    <h2 style="text-align:center">Your Loan Readiness Results</h2>
-    <p class="subtitle" style="text-align:center">Based on your ${state.bizType} in the ${state.sector} sector</p>
+    <h2 style="text-align:center">Your Results</h2>
+    <p class="subtitle" style="text-align:center">${state.bizName} · ${state.bizType} · ${state.sector}</p>
 
     <div class="score-ring ${levelClass}">
       <div class="score-num">${finalScore}</div>
       <div class="score-label">/100 · ${level}</div>
     </div>
-
     <p style="text-align:center;font-size:14px;color:var(--text2);margin-bottom:20px;">${levelMsg}</p>
-  `;
 
-  // Summary card
-  const usdAmt = Math.round(state.loanAmount / 209);
-  html += `
+    <!-- Summary -->
     <div class="result-card">
       <h4><span class="material-symbols-outlined" style="font-size:18px">summarize</span> Loan Summary</h4>
-      <div class="result-item">
-        <span class="ri-icon ri-info">💰</span>
-        <span class="ri-text">Requested: <strong>GYD $${state.loanAmount.toLocaleString()}</strong> (~US$${usdAmt.toLocaleString()})</span>
-      </div>
-      <div class="result-item">
-        <span class="ri-icon ri-info">📋</span>
-        <span class="ri-text">Tier: ${state.tier === 'tier1' ? 'Tier 1 only (0% interest)' : 'Tier 1 + Tier 2 (0% + sub-4%)'}</span>
-      </div>
-      <div class="result-item">
-        <span class="ri-icon ri-info">🎯</span>
-        <span class="ri-text">Purpose: ${state.purpose}</span>
-      </div>
-      <div class="result-item">
-        <span class="ri-icon ri-info">🏷️</span>
-        <span class="ri-text">Priority group: ${state.stage === 'Starting' || state.bizType === 'Sole Trader' ? 'Youth/startup — eligible for priority' : 'Standard applicant'}</span>
-      </div>
+      <div class="result-item"><span class="ri-icon">💰</span><span class="ri-text">Requested: <strong>GYD $${state.loanAmount.toLocaleString()}</strong> (~US$${usdAmt.toLocaleString()})</span></div>
+      <div class="result-item"><span class="ri-icon">📋</span><span class="ri-text">Tier: ${state.tier === 'tier1' ? 'Tier 1 (0%)' : 'Tier 1 + Tier 2'}</span></div>
+      <div class="result-item"><span class="ri-icon">🎯</span><span class="ri-text">Purpose: ${state.purpose} · Jobs: ${state.jobs}</span></div>
     </div>
-  `;
 
-  // Compliance checklist results
-  html += `<div class="result-card"><h4><span class="material-symbols-outlined" style="font-size:18px">checklist</span> Compliance Status</h4>`;
-  const items = {
+    <!-- Compliance -->
+    <div class="result-card">
+      <h4><span class="material-symbols-outlined" style="font-size:18px">checklist</span> Compliance Status (${checked}/${complianceItems.length})</h4>
+  `;
+  const itemLabels = {
     dcra: { label: 'DCRA Business Registration', link: 'https://dcraguyana.org', linkLabel: 'Register →' },
     tin: { label: 'TIN (Tax ID)', link: 'https://gra.gov.gy', linkLabel: 'Get TIN →' },
     nis: { label: 'NIS Registration', link: 'https://nis.gov.gy', linkLabel: 'Register →' },
     graCompliant: { label: 'GRA Tax Compliance', link: 'https://gra.gov.gy', linkLabel: 'File taxes →' },
-    businessPlan: { label: 'Business Plan', link: '#', linkLabel: 'Coming soon' },
+    businessPlan: { label: 'Business Plan', link: '#', linkLabel: '✅ Built below' },
     digitalId: { label: 'Digital ID Card', link: 'https://ndma.gov.gy', linkLabel: 'Get ID →' }
   };
   complianceItems.forEach(k => {
-    const item = items[k];
+    const item = itemLabels[k];
     const done = state.compliance[k];
-    html += `
-      <div class="result-item">
-        <span class="ri-icon ${done ? 'ri-check' : 'ri-cross'}">${done ? '✓' : '✗'}</span>
-        <span class="ri-text">${item.label}</span>
-        ${done ? '<span style="font-size:11px;color:var(--success);font-weight:500;">Complete</span>' : `<a href="${item.link}" target="_blank" class="ri-action">${item.linkLabel}</a>`}
-      </div>
-    `;
+    html += `<div class="result-item">
+      <span class="ri-icon" style="color:${done ? 'var(--success)' : 'var(--red)'}">${done ? '✓' : '✗'}</span>
+      <span class="ri-text">${item.label}</span>
+      ${done ? '<span style="font-size:11px;color:var(--success);font-weight:500;">Complete</span>' : `<a href="${item.link}" target="_blank" class="ri-action">${item.linkLabel}</a>`}
+    </div>`;
   });
   html += `</div>`;
 
-  // Ready for Development Bank?
+  // Business Plan Section
+  html += `
+    <div style="margin:20px 0 12px;display:flex;align-items:center;justify-content:space-between;">
+      <h3 style="font-size:18px;font-weight:700;">📄 Your Business Plan</h3>
+      <button onclick="printPlan()" style="padding:6px 16px;border-radius:20px;border:1px solid var(--border);background:white;font-size:12px;font-weight:600;cursor:pointer;color:var(--text2);">🖨️ Print</button>
+    </div>
+    ${bpHTML}
+  `;
+
+  // Info banners
   const majorItems = ['dcra', 'tin', 'graCompliant'];
   const majorDone = majorItems.filter(k => state.compliance[k]).length;
-  const readyForBank = majorDone >= 2;
-
-  if (readyForBank) {
-    html += `
-      <div class="info-banner" style="background:var(--green-light);border-color:#A5D6A7;">
-        <strong>✅ You're nearly ready!</strong> Once the Development Bank opens applications, you can apply with your DCRA registration, TIN, and business plan. <a href="https://592hub.com/guides/development-bank-guide" target="_blank" style="color:var(--success);font-weight:600;">Learn more →</a>
-      </div>
-    `;
+  if (majorDone >= 2) {
+    html += `<div class="info-banner" style="background:var(--green-light);border-color:#A5D6A7;">
+      <strong>✅ Nearly ready!</strong> Once the Bank opens, apply with your registration, TIN, and business plan. <a href="https://592hub.com/guides/development-bank-guide" target="_blank" style="color:var(--success);font-weight:600;">Learn more →</a>
+    </div>`;
   } else {
-    html += `
-      <div class="info-banner">
-        <strong>📌 Next steps:</strong> Start with DCRA business registration and getting your TIN. The Development Bank also offers training and mentorship to help you prepare. We can help with registration.
-      </div>
-    `;
+    html += `<div class="info-banner">
+      <strong>📌 Next steps:</strong> Start with DCRA registration and getting your TIN. The Bank offers free training. BizHubGY can help with registration.
+    </div>`;
   }
 
   // BizHubGY CTA
   html += `
     <div class="result-card" style="border:2px solid var(--primary);background:linear-gradient(135deg, var(--primary-light), #e8edff);">
       <h4 style="color:var(--primary)"><span class="material-symbols-outlined" style="font-size:18px">handshake</span> BizHubGY Can Help</h4>
-      <div class="result-item">
-        <span class="ri-text"><strong>Need help registering?</strong> We handle DCRA registration, TIN setup, and NIS compliance — so you're ready when the bank opens.</span>
-      </div>
-      <div class="result-item">
-        <span class="ri-text"><strong>Business plan?</strong> Our guided template walks you through what the bank looks for.</span>
-      </div>
-      <div class="result-item">
-        <span class="ri-text"><strong>Stay updated:</strong> We'll notify you the moment applications open.</span>
-      </div>
+      <div class="result-item"><span class="ri-text">We handle DCRA registration, TIN setup, NIS compliance, and more.</span></div>
+      <div class="result-item"><span class="ri-text">You'll be notified the moment the Development Bank opens applications.</span></div>
       <button onclick="window.open('https://bizhubgy.com','_blank')" style="margin-top:12px;padding:10px 24px;border-radius:30px;border:none;background:var(--primary);color:white;font-size:14px;font-weight:600;cursor:pointer;transition:all 0.2s;"
-        onmouseover="this.style.background='var(--primary-dark)'" onmouseout="this.style.background='var(--primary)'">
-        Start with BizHubGY →
-      </button>
+        onmouseover="this.style.background='var(--primary-dark)'" onmouseout="this.style.background='var(--primary)'">Start with BizHubGY →</button>
     </div>
   `;
 
   document.getElementById('resultsContent').innerHTML = html;
-  goStep(4);
+  state.resultsGenerated = true;
+  goStep(5);
 }
 
-// Init slider
+// ===== PRINT =====
+function printPlan() {
+  if (!state.resultsGenerated) return;
+  const name = state.bizName || 'Business Plan';
+  const title = 'Business Plan — ' + name + ' | BizHubGY';
+  const content = document.getElementById('resultsContent').innerHTML;
+
+  const printWin = window.open('', '_blank', 'width=800,height=600');
+  printWin.document.write(`
+    <html><head>
+      <title>${title}</title>
+      <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+      <style>
+        body { font-family: 'Inter', sans-serif; color: #1A1D29; padding: 40px; line-height: 1.6; }
+        h2 { font-size: 24px; }
+        .bp-section { background: #f8f9fd; border: 1px solid #e0e3eb; border-radius: 12px; padding: 16px; margin-bottom: 12px; page-break-inside: avoid; }
+        .bp-section h5 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #2C4D90; margin-bottom: 6px; }
+        .bp-section p { font-size: 13px; line-height: 1.6; }
+        .result-card { background: #f8f9fd; border: 1px solid #e0e3eb; border-radius: 12px; padding: 16px; margin-bottom: 12px; }
+        .result-item { display: flex; align-items: center; gap: 10px; padding: 6px 0; font-size: 13px; }
+        .score-ring { text-align: center; padding: 20px; }
+        .score-ring .score-num { font-size: 48px; font-weight: 900; }
+        @media print { body { padding: 20px; } }
+      </style>
+    </head><body>
+      <h1 style="margin-bottom:4px;">${name}</h1>
+      <p style="color:#4A4E5E;margin-bottom:24px;">Loan Readiness Assessment & Business Plan · Generated by BizHubGY</p>
+      ${content}
+    </body></html>
+  `);
+  printWin.document.close();
+  setTimeout(() => { printWin.print(); }, 500);
+}
+
+// Init
 updateLoanSlider();
+updateRevSlider();
+updateFunds();
 </script>
 </body>
 </html>

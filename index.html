@@ -326,6 +326,15 @@
         <button class="btn btn-primary" onclick="unlockGate()" style="white-space:nowrap;padding:12px 20px;">Continue</button>
       </div>
       <div class="gate-error" id="gateError">Please enter a valid email address.</div>
+      <!-- Success state (shown after submit) -->
+      <div class="gate-success" id="gateSuccess" style="display:none;">
+        <div class="gate-icon" style="background:var(--green-light);"><span class="material-symbols-outlined" style="color:var(--success)">check_circle</span></div>
+        <h2>You're in! 🎉</h2>
+        <p>Welcome aboard. Your free BizHubGY account gives you access to the wizard, tender alerts, and more.</p>
+        <button class="btn btn-success" onclick="closeGate()" style="margin-top:16px;padding:12px 32px;border-radius:30px;border:none;background:var(--success);color:white;font-size:14px;font-weight:600;cursor:pointer;">
+          Start the Wizard →
+        </button>
+      </div>
       <div class="gate-footer">
         Already have an account? <a href="https://bizhubgy.com/login" target="_blank">Sign in →</a><br>
         By continuing, you agree to BizHubGY's <a href="https://bizhubgy.com/terms" target="_blank">Terms</a> and <a href="https://bizhubgy.com/privacy" target="_blank">Privacy Policy</a>
@@ -1013,6 +1022,9 @@ updateRevSlider();
 updateFunds();
 
 // ===== ACCOUNT GATE =====
+// Configure your webhook URL here 👇
+const WEBHOOK_URL = 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec';
+
 function unlockGate() {
   const email = document.getElementById('gateEmail').value.trim();
   const errorEl = document.getElementById('gateError');
@@ -1024,11 +1036,44 @@ function unlockGate() {
   }
 
   errorEl.style.display = 'none';
+
+  // Save to localStorage
   localStorage.setItem('bizhubgy_wizard_user', JSON.stringify({
     email: email,
     loggedInAt: new Date().toISOString()
   }));
 
+  // Send to webhook (fire-and-forget — don't block the UI)
+  const payload = {
+    email: email,
+    source: 'loan-readiness-wizard',
+    signedUpAt: new Date().toISOString(),
+    userAgent: navigator.userAgent,
+    referrer: document.referrer || 'direct'
+  };
+
+  fetch(WEBHOOK_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).catch(() => {
+    // Silent fail — gate still works even if webhook is down
+    console.log('Webhook unavailable (expected before deployment)');
+  });
+
+  // Show success state
+  document.querySelector('.gate-overlay > .gate-icon').style.display = 'none';
+  document.querySelector('.gate-overlay > h2').style.display = 'none';
+  document.querySelector('.gate-overlay > p').style.display = 'none';
+  document.querySelector('.gate-overlay > .gate-benefits').style.display = 'none';
+  document.querySelector('.gate-overlay > .gate-input-wrap').style.display = 'none';
+  document.getElementById('gateError').style.display = 'none';
+  document.querySelector('.gate-overlay > .gate-footer').style.display = 'none';
+  document.getElementById('gateSuccess').style.display = 'block';
+}
+
+function closeGate() {
   document.getElementById('gateOverlay').style.display = 'none';
   document.getElementById('wizardCard').classList.remove('gated');
 }

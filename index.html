@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Development Bank Loan Readiness + Business Plan · BizHubGY</title>
+  <title>Loan Readiness Wizard + Free Business Plan Builder · BizHubGY</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,200" rel="stylesheet">
   <style>
@@ -232,6 +232,57 @@
       .wizard-card { padding: 20px 16px; }
       .hero h1 { font-size: 22px; }
     }
+
+    /* Account Gate Overlay */
+    .gate-overlay {
+      position: absolute;
+      inset: -1px;
+      background: white;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 32px;
+      text-align: center;
+    }
+    .gate-overlay .gate-icon {
+      width: 64px; height: 64px;
+      border-radius: 50%;
+      background: var(--primary-light);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+    }
+    .gate-overlay .gate-icon span { font-size: 32px; color: var(--primary); }
+    .gate-overlay h2 { font-size: 22px; font-weight: 700; }
+    .gate-overlay p { font-size: 14px; color: var(--text2); margin-top: 6px; max-width: 380px; }
+    .gate-overlay .gate-benefits {
+      display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0 20px;
+      justify-content: center;
+    }
+    .gate-overlay .gate-benefit {
+      font-size: 12px; font-weight: 500; color: var(--text2);
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 20px; padding: 6px 14px;
+    }
+    .gate-input-wrap {
+      width: 100%; max-width: 400px;
+      display: flex; gap: 8px;
+    }
+    .gate-input-wrap input {
+      flex: 1; padding: 12px 16px; border: 1.5px solid var(--border);
+      border-radius: 12px; font-family: 'Inter', sans-serif; font-size: 14px;
+      color: var(--text); outline: none; transition: border-color 0.2s;
+    }
+    .gate-input-wrap input:focus { border-color: var(--primary); }
+    .gate-input-wrap input::placeholder { color: var(--text3); }
+    .gate-error { font-size: 12px; color: var(--red); margin-top: 8px; display: none; }
+    .gate-footer { font-size: 11px; color: var(--text3); margin-top: 16px; }
+    .gate-footer a { color: var(--primary); text-decoration: none; }
+    .gate-footer a:hover { text-decoration: underline; }
+    .wizard-card.gated .wizard-inner { filter: blur(4px); pointer-events: none; user-select: none; }
   </style>
 </head>
 <body>
@@ -240,7 +291,7 @@
   <div class="container">
     <a href="#" class="nav-brand">
       <img src="https://raw.githubusercontent.com/rono1503/bizhubgy-content-styles/main/logo.png" alt="BizHubGY" onerror="this.style.display='none'">
-      <span>Loan Readiness <small>+ Business Plan</small></span>
+      <span>Loan Readiness Wizard <small>+ Free Business Plan</small></span>
     </a>
     <a href="https://rono1503.github.io/bizhubgy-product-roadmap/" style="font-size:13px;font-weight:500;color:var(--text2);text-decoration:none;">
       Product Roadmap →
@@ -251,13 +302,37 @@
 <section class="hero">
   <div class="container">
     <div class="badge">🇬🇾 Guyana Development Bank 2026</div>
-    <h1>Loan Ready + Business Plan Builder</h1>
-    <p>Check eligibility for the GYD$3M (US$14,500) 0% SME loan and generate a bank-ready business plan — all in one go</p>
+    <h1>Loan Readiness Wizard</h1>
+    <p>Free Business Plan Builder included. Check eligibility for the GYD$3M (US$14,500) 0% SME loan in under 5 minutes</p>
   </div>
 </section>
 
 <div class="container">
-  <div class="wizard-card">
+  <div class="wizard-card" id="wizardCard">
+
+    <!-- Account Gate -->
+    <div class="gate-overlay" id="gateOverlay">
+      <div class="gate-icon"><span class="material-symbols-outlined">lock</span></div>
+      <h2>Free BizHubGY Account Required</h2>
+      <p>Sign in or create a free account to access the Loan Readiness Wizard + Business Plan Builder</p>
+      <div class="gate-benefits">
+        <span class="gate-benefit">📊 Loan eligibility check</span>
+        <span class="gate-benefit">📄 Business plan generator</span>
+        <span class="gate-benefit">📬 Tender alerts</span>
+        <span class="gate-benefit">📋 Compliance tracking</span>
+      </div>
+      <div class="gate-input-wrap">
+        <input type="email" id="gateEmail" placeholder="Enter your email address" onkeydown="if(event.key==='Enter')unlockGate()">
+        <button class="btn btn-primary" onclick="unlockGate()" style="white-space:nowrap;padding:12px 20px;">Continue</button>
+      </div>
+      <div class="gate-error" id="gateError">Please enter a valid email address.</div>
+      <div class="gate-footer">
+        Already have an account? <a href="https://bizhubgy.com/login" target="_blank">Sign in →</a><br>
+        By continuing, you agree to BizHubGY's <a href="https://bizhubgy.com/terms" target="_blank">Terms</a> and <a href="https://bizhubgy.com/privacy" target="_blank">Privacy Policy</a>
+      </div>
+    </div>
+
+    <div class="wizard-inner">
 
     <!-- Progress -->
     <div class="progress-container">
@@ -599,8 +674,10 @@
       </div>
     </div>
 
-  </div>
-</div>
+  </div> <!-- /wizard-inner -->
+
+</div> <!-- /wizard-card -->
+</div> <!-- /outer container -->
 
 <div style="text-align:center;padding:32px 0;color:var(--text3);font-size:13px;border-top:1px solid var(--border);margin-top:40px;">
   <div class="container">
@@ -934,6 +1011,41 @@ function printPlan() {
 updateLoanSlider();
 updateRevSlider();
 updateFunds();
+
+// ===== ACCOUNT GATE =====
+function unlockGate() {
+  const email = document.getElementById('gateEmail').value.trim();
+  const errorEl = document.getElementById('gateError');
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  if (!email || !emailRegex.test(email)) {
+    errorEl.style.display = 'block';
+    return;
+  }
+
+  errorEl.style.display = 'none';
+  localStorage.setItem('bizhubgy_wizard_user', JSON.stringify({
+    email: email,
+    loggedInAt: new Date().toISOString()
+  }));
+
+  document.getElementById('gateOverlay').style.display = 'none';
+  document.getElementById('wizardCard').classList.remove('gated');
+}
+
+// Check gate on page load
+(function() {
+  const saved = localStorage.getItem('bizhubgy_wizard_user');
+  if (saved) {
+    document.getElementById('gateOverlay').style.display = 'none';
+    document.getElementById('wizardCard').classList.remove('gated');
+  } else {
+    document.getElementById('gateOverlay').style.display = 'flex';
+    document.getElementById('wizardCard').classList.add('gated');
+    // Focus the email input
+    setTimeout(() => document.getElementById('gateEmail').focus(), 300);
+  }
+})();
 </script>
 </body>
 </html>

@@ -1024,6 +1024,7 @@ updateFunds();
 // ===== ACCOUNT GATE =====
 // Configure your webhook URL here 👇
 const WEBHOOK_URL = 'https://bizhub-gy-backend-production-0ca8.up.railway.app/api/wizard/signup';
+const VERIFY_URL  = 'https://bizhub-gy-backend-production-0ca8.up.railway.app/api/wizard/verify';
 
 function unlockGate() {
   const email = document.getElementById('gateEmail').value.trim();
@@ -1078,17 +1079,77 @@ function closeGate() {
   document.getElementById('wizardCard').classList.remove('gated');
 }
 
+// ===== SSO TOKEN HANDLING =====
+// Check for a ?token= parameter — if valid, auto-login and skip the gate
+function handleSSOToken() {
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  if (!token) {
+    return false;
+  }
+
+  // Clean the token from URL so it doesn't persist on refresh
+  params.delete('token');
+  const cleanUrl = window.location.pathname + (params.toString() ? '?' + params.toString() : '');
+  window.history.replaceState({}, '', cleanUrl);
+
+  // Verify the token with the backend
+  fetch(VERIFY_URL + '?token=' + encodeURIComponent(token))
+    .then(r => r.json())
+    .then(data => {
+      if (data.valid) {
+        // Auto-login: save to localStorage like the gate would
+        localStorage.setItem('bizhubgy_wizard_user', JSON.stringify({
+          email: data.email,
+          full_name: data.full_name || data.email.split('@')[0],
+          loggedInAt: new Date().toISOString(),
+          via_sso: true
+        }));
+        // Skip the gate
+        document.getElementById('gateOverlay').style.display = 'none';
+        document.getElementById('wizardCard').classList.remove('gated');
+      } else {
+        showGate();
+      }
+    })
+    .catch(() => {
+      // If verify endpoint is unreachable, fall back to normal gate
+      showGate();
+    });
+
+  return true; // Async check in progress — don't show gate yet
+}
+
+function showGate() {
+  document.getElementById('gateOverlay').style.display = 'flex';
+  document.getElementById('wizardCard').classList.add('gated');
+  setTimeout(() => {
+    const inp = document.getElementById('gateEmail');
+    if (inp) inp.focus();
+  }, 300);
+}
+
 // Check gate on page load
 (function() {
+  // Try SSO token first
+  if (handleSSOToken()) {
+    return; // Async — gate will be shown/hidden when response arrives
+  }
+
+  // Fall back to localStorage check
   const saved = localStorage.getItem('bizhubgy_wizard_user');
   if (saved) {
     document.getElementById('gateOverlay').style.display = 'none';
     document.getElementById('wizardCard').classList.remove('gated');
+    // Update the "Sign in →" link if they came from BizHubGY
+    const footerLinks = document.querySelectorAll('.gate-footer a');
+    footerLinks.forEach(a => {
+      if (a.textContent === 'Sign in →') {
+        a.href = 'https://bizhubgy.com/login?redirect=' + encodeURIComponent(window.location.href);
+      }
+    });
   } else {
-    document.getElementById('gateOverlay').style.display = 'flex';
-    document.getElementById('wizardCard').classList.add('gated');
-    // Focus the email input
-    setTimeout(() => document.getElementById('gateEmail').focus(), 300);
+    showGate();
   }
 })();
 </script>

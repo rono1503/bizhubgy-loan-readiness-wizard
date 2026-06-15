@@ -676,6 +676,11 @@
     <!-- ===== STEP 5: Results ===== -->
     <div class="step" id="step5">
       <div id="resultsContent"></div>
+      <button id="saveToVaultBtn" class="btn btn-primary btn-full" onclick="savePlanToVault()" style="display:none;margin-bottom:12px;">
+        <span class="material-symbols-outlined" style="font-size:18px">save</span>
+        Save to Your Vault
+      </button>
+      <div id="savedMsg" style="display:none;"></div>
       <div class="btn-row">
         <button class="btn btn-outline" onclick="printPlan()">🖨️ Print / Save PDF</button>
         <button class="btn btn-outline" onclick="goStep(1)">← Start Over</button>
@@ -704,7 +709,10 @@ const state = {
   funds: { equipment: 35, staff: 30, marketing: 20, capital: 15 },
   compliance: {},
   loanAmount: 3000000, purpose: '', tier: '',
-  resultsGenerated: false
+  resultsGenerated: false,
+  ssoToken: null,
+  businessProfile: null,
+  savedAssessmentId: null,
 };
 let currentStep = 1;
 
@@ -980,6 +988,60 @@ function showResults() {
   document.getElementById('resultsContent').innerHTML = html;
   state.resultsGenerated = true;
   goStep(5);
+
+  // Show save button if authenticated
+  const saveBtn = document.getElementById('saveToVaultBtn');
+  const savedMsg = document.getElementById('savedMsg');
+  if (state.ssoToken) {
+    saveBtn.style.display = 'flex';
+    savedMsg.style.display = 'none';
+  } else {
+    saveBtn.style.display = 'none';
+  }
+}
+
+// ===== SAVE TO VAULT =====
+async function savePlanToVault() {
+  if (!state.ssoToken) {
+    alert('Please sign in to save to your vault.');
+    return;
+  }
+
+  const btn = document.getElementById('saveToVaultBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">hourglass_top</span> Saving...';
+
+  try {
+    const res = await fetch(API_URL + '/api/wizard/save-plan', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + state.ssoToken,
+      },
+      body: JSON.stringify({ wizardState: state }),
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.error || 'Save failed');
+    }
+
+    const data = await res.json();
+    state.savedAssessmentId = data.assessment_id;
+
+    // Show success message with link to dashboard
+    document.getElementById('saveToVaultBtn').style.display = 'none';
+    const msg = document.getElementById('savedMsg');
+    msg.style.display = 'block';
+    msg.innerHTML = '<div class="info-banner" style="background:var(--green-light);border-color:#A5D6A7;margin-top:0;display:flex;align-items:center;gap:8px;">' +
+      '<span style="color:var(--success);font-size:20px;">✅</span>' +
+      '<span><strong>Saved to your Vault!</strong> <a href="https://bizhubgy.com/vault" target="_blank" style="color:var(--success);font-weight:600;text-decoration:underline;">View in Dashboard →</a></span>' +
+      '</div>';
+  } catch (err) {
+    btn.disabled = false;
+    btn.innerHTML = '<span class="material-symbols-outlined" style="font-size:18px">save</span> Save to Your Vault';
+    alert('Could not save to vault: ' + err.message);
+  }
 }
 
 // ===== PRINT =====
@@ -1025,6 +1087,7 @@ updateFunds();
 // Configure your webhook URL here 👇
 const WEBHOOK_URL = 'https://bizhub-gy-backend-production-0ca8.up.railway.app/api/wizard/signup';
 const VERIFY_URL  = 'https://bizhub-gy-backend-production-0ca8.up.railway.app/api/wizard/verify';
+const API_URL     = 'https://bizhub-gy-backend-production-0ca8.up.railway.app';
 
 function unlockGate() {
   const email = document.getElementById('gateEmail').value.trim();
@@ -1098,6 +1161,8 @@ function handleSSOToken() {
     .then(r => r.json())
     .then(data => {
       if (data.valid) {
+        // Store the raw JWT token for API calls
+        state.ssoToken = token;
         // Auto-login: save to localStorage like the gate would
         localStorage.setItem('bizhubgy_wizard_user', JSON.stringify({
           email: data.email,
@@ -1105,6 +1170,21 @@ function handleSSOToken() {
           loggedInAt: new Date().toISOString(),
           via_sso: true
         }));
+
+        // Fetch business profile for pre-fill
+        fetch(API_URL + '/api/business', {
+          headers: { 'Authorization': 'Bearer ' + token }
+        })
+          .then(r => r.json())
+          .then(biz => {
+            if (biz && biz.business_name) {
+              state.businessProfile = biz;
+              state.bizName = biz.business_name;
+              document.getElementById('bizName').value = biz.business_name;
+            }
+          })
+          .catch(() => {});
+
         // Skip the gate
         document.getElementById('gateOverlay').style.display = 'none';
         document.getElementById('wizardCard').classList.remove('gated');
